@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        #slider-container {
+            position: relative;
+            width: 1000px;
+            height: 600px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #slider {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #prevBtn { left: 10px; }
+        #nextBtn { right: 10px; }
+
+        .btn:hover { background: rgba(0, 0, 0, 0.8); }
+    </style>
+</head>
+<body>
+    <div id="slider-container">
+        <button class="btn" id="prevBtn" onclick="prevImage()">❮</button>
+        <img id="slider" src="" alt="Slider Image">
+        <button class="btn" id="nextBtn" onclick="nextImage()">❯</button>
+    </div>
+
+    <script>
+        const images = [
+            'Flower.jpg',
+            'Love.jpg',
+            'Nature.jpg',
+            'Ocean.jpg',
+            'Racing.jpg'
+        ];
+
+        let currentIndex = 0;
+        const slider = document.getElementById('slider');
+
+        function showImage(index) {
+            slider.style.opacity = 0; 
+            const img = new Image();
+            img.src = images[index] + "?" + new Date().getTime();
+            img.onload = () => {
+                slider.src = img.src;
+                slider.style.opacity = 1;
+            };
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1;
+            showImage(currentIndex);
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1;
+            showImage(currentIndex);
+        }
+
+        showImage(currentIndex);
+    </script>
+</body>
+</html>
